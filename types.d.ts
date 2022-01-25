@@ -1,20 +1,32 @@
 /// <reference types="node" />
 
 interface Sample {
-    value: number,
-    timestamp?: number
+  value: number;
+  timestamp?: number;
 }
 
 interface Timeseries {
-    // Labels for every sample
-    labels: {
-        // Key for sample, should end with _totals, etc
-        __name__: string,
-        // Optional properties, i.e. instance, job, service
-        [key:string]: string
-    },
-    // List of samples, timestamp is optional, will be set by pushTimeseries
-    samples: Sample[]
+  // Labels for every sample
+  labels: {
+    // Key for sample, should end with _totals, etc, see https://prometheus.io/docs/practices/naming/
+    __name__: string;
+    // Optional properties, i.e. instance, job, service
+    [key: string]: string;
+  };
+  // List of samples, timestamp is optional, will be set by pushTimeseries
+  samples: Sample[];
 }
 
-export function pushTimeseries(timeseries: Timeseries | Timeseries[], options?: any);
+interface Options {
+  url?: string;
+  auth?: {
+    username?: string;
+    password?: string;
+  };
+  verbose?: boolean;
+  timing?: boolean;
+  proto?: string;
+  labels?: { [key: string]: string };
+}
+
+export function pushTimeseries(timeseries: Timeseries | Timeseries[], options?: Options);

@@ -8,6 +8,9 @@ const config = {
   },
   verbose: true,
   timing: true,
+  labels: {
+    service: "bar",
+  },
 };
 
 push
@@ -17,7 +20,6 @@ push
         __name__: "test_exemplar_metric_total",
         instance: "localhost:8090",
         job: "prometheus",
-        service: "bar",
       },
       samples: [
         {
@@ -39,8 +41,7 @@ for (let i = 0; i < 100; i++) {
         labels: {
           __name__: "test_exemplar_metric_total",
           instance: "localhost:8090",
-          job: "prometheus",
-          service: "bar",
+          job: "prometheus"
         },
         samples: [
           {

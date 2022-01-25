@@ -9,10 +9,12 @@ const __holder = {
 };
 
 const kv = (o) =>
-  Object.entries(o).map((e) => ({
-    name: e[0],
-    value: e[1],
-  }));
+  typeof o === "object"
+    ? Object.entries(o).map((e) => ({
+        name: e[0],
+        value: e[1],
+      }))
+    : undefined;
 
 /** Loads protocol definition, caches it */
 async function loadProto(options) {
@@ -47,7 +49,8 @@ async function serialize(payload, options) {
 /**
  * Sends metrics over HTTP(s)
  *
- * @param {Timeseries | Timeseries[]} samples
+ * @param {import("./types").Timeseries | import("./types").Timeseries[]} timeseries
+ * @param {import("./types").Options} options
  */
 async function pushTimeseries(timeseries, options) {
   const orig = timeseries;
@@ -62,25 +65,29 @@ async function pushTimeseries(timeseries, options) {
     };
   }
 
-  const start1 = Date.now()
-  const buffer = await serialize(
-    {
-      timeseries: timeseries.map((t) => ({
-        labels: Array.isArray(t.labels) ? t.labels : kv(t.labels),
-        samples: t.samples.map((s) => ({
-          value: s.value,
-          timestamp: s.timestamp ? s.timestamp : Date.now(),
-        })),
+  const start1 = Date.now();
+  const writeRequest = {
+    timeseries: timeseries.map((t) => ({
+      labels: Array.isArray(t.labels) ? [t.labels, ...(kv(options?.labels) || [])] : kv({
+        ...options?.labels,
+        ...t.labels
+      }),
+      samples: t.samples.map((s) => ({
+        value: s.value,
+        timestamp: s.timestamp ? s.timestamp : Date.now(),
       })),
-    },
+    })),
+  }
+  const buffer = await serialize(
+    writeRequest,
     options?.proto
   );
 
   const logger = options?.console || console;
 
-  const start2 = Date.now()
+  const start2 = Date.now();
   if (options?.timing) {
-    logger.info("Serialized in", start2 - start1, "ms")
+    logger.info("Serialized in", start2 - start1, "ms");
   }
 
   if (options?.url) {
@@ -99,11 +106,11 @@ async function pushTimeseries(timeseries, options) {
       const text = await r.text();
 
       if (options?.verbose && r.status != 200) {
-        logger.warn("Failed to send timeseries, error", r.status + " " + r.statusText + " " + text, orig);
+        logger.warn("Failed to send write request, error", r.status + " " + r.statusText + " " + text, writeRequest);
       } else if (options?.verbose && !options?.timing) {
-        logger.info("Timeseries sent", r.status + " " + r.statusText + " " + text, orig);
+        logger.info("Write request sent", r.status + " " + r.statusText + " " + text, writeRequest);
       } else if (options?.verbose && options?.timing) {
-        logger.info("Timeseries sent", r.status + " " + r.statusText + " in", Date.now() - start2, "ms", orig);
+        logger.info("Write request sent", r.status + " " + r.statusText + " in", Date.now() - start2, "ms", writeRequest);
       }
 
       return {
