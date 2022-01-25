@@ -1,0 +1,19 @@
+{
+  "name": "prometheus-remote-write",
+  "version": "0.1.0",
+  "description": "Send samples to prometheus via remote_write from NodeJS",
+  "main": "index.js",
+  "private": "false",
+  "scripts": {
+    "test": "node index.test",
+    "build": "./node_modules/.bin/pbjs -t static-module  -o prom.js prom.proto",
+    "test:ci": "env GRAFANA_PUSH_URL=chamberme GRAFANA_INSTANCE_ID=chamberme GRAFANA_API_KEY=chamberme chamber exec --strict prometheus-remote-write -- node index.test"
+  },
+  "author": "Ruslan Gainu",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "protobufjs": "^6.11.2",
+    "snappyjs": "^0.6.1"
+  }
+}
