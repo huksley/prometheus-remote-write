@@ -54,6 +54,14 @@ async function pushTimeseries(timeseries, options) {
   // Brush up a little
   timeseries = !Array.isArray(timeseries) ? [timeseries] : timeseries;
 
+  // Nothing to do
+  if (timeseries.length === 0) {
+    return {
+      status: 200,
+      statusText: "OK",
+    };
+  }
+
   const start1 = Date.now()
   const buffer = await serialize(
     {

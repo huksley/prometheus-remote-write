@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 interface Sample {
     value: number,
     timestamp?: number
@@ -14,3 +16,5 @@ interface Timeseries {
     // List of samples, timestamp is optional, will be set by pushTimeseries
     samples: Sample[]
 }
+
+export function pushTimeseries(timeseries: Timeseries | Timeseries[], options?: any);
