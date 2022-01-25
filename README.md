@@ -1,6 +1,6 @@
-# Push timeseries to prometheus
+# Push timeseries to Prometheus via remote_write
 
-Using remote_write facility (see https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write) to send metrics from NodeJS app.
+Using remote_write facility (see https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write) to send metrics to remote Prometheus from NodeJS app.
 
 Pretty much anything from https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage should be supported, but tested only with grafana.com:
 
@@ -33,7 +33,7 @@ Pretty much anything from https://prometheus.io/docs/operating/integrations/#rem
   * [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
   * [Wavefront](https://github.com/wavefrontHQ/prometheus-storage-adapter)
 
-(list copied from https://github.com/prometheus/docs/blob/main/content/docs/operating/integrations.md)
+(List copied from https://github.com/prometheus/docs/blob/main/content/docs/operating/integrations.md)
 
 ## Usage:
 
@@ -41,12 +41,16 @@ Pretty much anything from https://prometheus.io/docs/operating/integrations/#rem
 import pushTimeseries from "prometheus-remote-write";
 
 const config = {
+  // Remote url
   url: "http://localhost:9201",
+  // Auth settings
   auth: {
     username: "...",
     password: "...",
   },
+  // Optional prometheus protocol descripton .proto/.json
   proto: undefined,
+  // Logging & debugging, disabled by default
   console: undefined,
   verbose: false,
   timing: false,
