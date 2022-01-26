@@ -27,6 +27,11 @@ interface Options {
   timing?: boolean;
   proto?: string;
   labels?: { [key: string]: string };
+  fetch?: typeof fetch
 }
 
+/** Push timeseries entries to Prometheus */
 export function pushTimeseries(timeseries: Timeseries | Timeseries[], options?: Options);
+
+/** Push simpler key:value metrics to Prometheus, additional labels can be provided via options */
+export function pushMetrics(metrics: Record<string, number>, options?: Options);

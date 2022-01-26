@@ -56,3 +56,5 @@ for (let i = 0; i < 100; i++) {
       console.info("Result", r);
     });
 }
+
+push.pushMetrics({ users_total: 11 })

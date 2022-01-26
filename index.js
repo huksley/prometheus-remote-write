@@ -91,7 +91,7 @@ async function pushTimeseries(timeseries, options) {
   }
 
   if (options?.url) {
-    return fetch(options?.url, {
+    return (options.fetch || fetch)(options?.url, {
       method: "POST",
       headers: {
         "Content-Type": "application/vnd.google.protobuf",
@@ -124,8 +124,19 @@ async function pushTimeseries(timeseries, options) {
   }
 }
 
+async function pushMetrics(metrics, options) {
+  return pushTimeseries(
+    Object.entries(metrics).map(c => ({
+      labels: { __name__: c[0] },
+      samples: [{ value: c[1] }]
+    })),
+    options
+  )
+}
+
 module.exports = {
   serialize,
   loadProto,
   pushTimeseries,
+  pushMetrics
 };
