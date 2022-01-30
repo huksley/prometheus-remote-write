@@ -56,9 +56,14 @@ const config = {
   console: undefined,
   verbose: false,
   timing: false,
+  // Override used node-fetch
+  fetch: undefined,
+  // Additional labels to apply to each timeseries, i.e. [{ service: "SQS" }]
+  labels: undefined
 };
 
-pushTimeseries(
+// Follows remote_write payload format (see https://github.com/prometheus/prometheus/blob/main/prompb/types.proto)
+await pushTimeseries(
   {
     labels: {
       __name__: "queue_depth_total",
@@ -74,10 +79,14 @@ pushTimeseries(
   },
   config
 )
+
+// Simpler push 
+await pushMetrics({ queue_depth_total: 150 }, config)
 ```
 
+## Links
 
-[0]: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write
-[1]: https://grafana.com/docs/grafana-cloud/metrics-prometheus/
-[2]: https://docs.newrelic.com/docs/infrastructure/prometheus-integrations/install-configure-remote-write/set-your-prometheus-remote-write-integration/
-[3]: https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage
+- https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write
+- https://grafana.com/docs/grafana-cloud/metrics-prometheus/
+- https://docs.newrelic.com/docs/infrastructure/prometheus-integrations/install-configure-remote-write/set-your-prometheus-remote-write-integration/
+- https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage
