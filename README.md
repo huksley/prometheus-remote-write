@@ -6,42 +6,54 @@ Using remote_write facility (see https://prometheus.io/docs/prometheus/latest/co
 
 Pretty much anything from https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage should be supported, but tested only with grafana.com:
 
-  * [AppOptics](https://github.com/solarwinds/prometheus2appoptics)
-  * [AWS Timestream](https://github.com/dpattmann/prometheus-timestream-adapter)
-  * [Azure Data Explorer](https://github.com/cosh/PrometheusToAdx)
-  * [Azure Event Hubs](https://github.com/bryanklewis/prometheus-eventhubs-adapter)
-  * [Chronix](https://github.com/ChronixDB/chronix.ingester)
-  * [Cortex](https://github.com/cortexproject/cortex)
-  * [CrateDB](https://github.com/crate/crate_adapter)
-  * [Elasticsearch](https://www.elastic.co/guide/en/beats/metricbeat/master/metricbeat-metricset-prometheus-remote_write.html)
-  * [Gnocchi](https://gnocchi.xyz/prometheus.html)
-  * [Google BigQuery](https://github.com/KohlsTechnology/prometheus_bigquery_remote_storage_adapter)
-  * [Google Cloud Spanner](https://github.com/google/truestreet)
-  * [Graphite](https://github.com/prometheus/prometheus/tree/main/documentation/examples/remote_storage/remote_storage_adapter)
-  * [InfluxDB](https://docs.influxdata.com/influxdb/v1.8/supported_protocols/prometheus)
-  * [Instana](https://www.instana.com/docs/ecosystem/prometheus/#remote-write)
-  * [IRONdb](https://github.com/circonus-labs/irondb-prometheus-adapter)
-  * [Kafka](https://github.com/Telefonica/prometheus-kafka-adapter)
-  * [M3DB](https://m3db.io/docs/integrations/prometheus/)
-  * [New Relic](https://docs.newrelic.com/docs/set-or-remove-your-prometheus-remote-write-integration)
-  * [OpenTSDB](https://github.com/prometheus/prometheus/tree/main/documentation/examples/remote_storage/remote_storage_adapter)
-  * [PostgreSQL/TimescaleDB](https://github.com/timescale/promscale)
-  * [QuasarDB](https://doc.quasardb.net/master/user-guide/integration/prometheus.html)
-  * [SignalFx](https://github.com/signalfx/metricproxy#prometheus)
-  * [Splunk](https://github.com/kebe7jun/ropee)
-  * [Sysdig Monitor](https://docs.sysdig.com/en/docs/installation/prometheus-remote-write/)
-  * [TiKV](https://github.com/bragfoo/TiPrometheus)
-  * [Thanos](https://github.com/thanos-io/thanos)
-  * [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
-  * [Wavefront](https://github.com/wavefrontHQ/prometheus-storage-adapter)
+- [AppOptics](https://github.com/solarwinds/prometheus2appoptics)
+- [AWS Timestream](https://github.com/dpattmann/prometheus-timestream-adapter)
+- [Azure Data Explorer](https://github.com/cosh/PrometheusToAdx)
+- [Azure Event Hubs](https://github.com/bryanklewis/prometheus-eventhubs-adapter)
+- [Chronix](https://github.com/ChronixDB/chronix.ingester)
+- [Cortex](https://github.com/cortexproject/cortex)
+- [CrateDB](https://github.com/crate/crate_adapter)
+- [Elasticsearch](https://www.elastic.co/guide/en/beats/metricbeat/master/metricbeat-metricset-prometheus-remote_write.html)
+- [Gnocchi](https://gnocchi.xyz/prometheus.html)
+- [Google BigQuery](https://github.com/KohlsTechnology/prometheus_bigquery_remote_storage_adapter)
+- [Google Cloud Spanner](https://github.com/google/truestreet)
+- [Graphite](https://github.com/prometheus/prometheus/tree/main/documentation/examples/remote_storage/remote_storage_adapter)
+- [InfluxDB](https://docs.influxdata.com/influxdb/v1.8/supported_protocols/prometheus)
+- [Instana](https://www.instana.com/docs/ecosystem/prometheus/#remote-write)
+- [IRONdb](https://github.com/circonus-labs/irondb-prometheus-adapter)
+- [Kafka](https://github.com/Telefonica/prometheus-kafka-adapter)
+- [M3DB](https://m3db.io/docs/integrations/prometheus/)
+- [New Relic](https://docs.newrelic.com/docs/set-or-remove-your-prometheus-remote-write-integration)
+- [OpenTSDB](https://github.com/prometheus/prometheus/tree/main/documentation/examples/remote_storage/remote_storage_adapter)
+- [PostgreSQL/TimescaleDB](https://github.com/timescale/promscale)
+- [QuasarDB](https://doc.quasardb.net/master/user-guide/integration/prometheus.html)
+- [SignalFx](https://github.com/signalfx/metricproxy#prometheus)
+- [Splunk](https://github.com/kebe7jun/ropee)
+- [Sysdig Monitor](https://docs.sysdig.com/en/docs/installation/prometheus-remote-write/)
+- [TiKV](https://github.com/bragfoo/TiPrometheus)
+- [Thanos](https://github.com/thanos-io/thanos)
+- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
+- [Wavefront](https://github.com/wavefrontHQ/prometheus-storage-adapter)
 
 (List copied from https://github.com/prometheus/docs/blob/main/content/docs/operating/integrations.md)
 
 ## Usage:
 
 ```js
-import pushTimeseries from "prometheus-remote-write";
+import { pushTimeseries, pushMetrics } from "prometheus-remote-write";
 
+// Just push some metrics metrics
+await pushMetrics(
+  {
+    queue_depth_total: 100,
+  },
+  {
+    url: process.env.GRAFANA_PUSH_URL || "http://localhost:9201",
+    labels: { service: "queue-worker" },
+  }
+);
+
+// Full config - only url is required
 const config = {
   // Remote url
   url: "http://localhost:9201",
@@ -78,10 +90,7 @@ await pushTimeseries(
     ],
   },
   config
-)
-
-// Simpler push 
-await pushMetrics({ queue_depth_total: 150 }, config)
+);
 ```
 
 ## Links
