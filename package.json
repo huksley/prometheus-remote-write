@@ -1,16 +1,28 @@
 {
   "name": "prometheus-remote-write",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "Send samples to prometheus via remote_write from NodeJS",
   "main": "index.js",
   "types": "types.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huksley/prometheus-remote-write.git"
+  },
+  "bugs": "https://github.com/huksley/prometheus-remote-write/issues",
+  "homepage": "https://github.com/huksley/prometheus-remote-write",
   "scripts": {
     "test": "node index.test",
     "build": "./node_modules/.bin/pbjs -t static-module  -o prom.js prom.proto",
     "test:ci": "env GRAFANA_PUSH_URL=chamberme GRAFANA_INSTANCE_ID=chamberme GRAFANA_API_KEY=chamberme chamber exec --strict prometheus-remote-write -- node index.test"
   },
-  "author": "Ruslan Gainu",
+  "author": "Ruslan Gainutdinov",
   "license": "MIT",
+  "keywords": [
+    "prometheus",
+    "remote",
+    "write",
+    "metrics"
+  ],
   "dependencies": {
     "node-fetch": "^2.6.7",
     "protobufjs": "^6.11.2",
