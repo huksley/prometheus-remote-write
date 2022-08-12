@@ -1,10 +1,6 @@
 # Push timeseries to Prometheus via remote_write
 
-<span class="badge-npmversion"><a href="https://npmjs.com/package/prometheus-remote-write" title="View this project on NPM"><img src="https://img.shields.io/npm/v/prometheus-remote-write.svg" alt="NPM version" /></a></span>
-
-<span class="badge-npmversion"><a href="https://npmjs.com/package/prometheus-remote-write" title="View this project on NPM"><img src="https://img.shields.io/bundlephobia/min/prometheus-remote-write.svg" alt="NPM Size" /></a></span>
-
-<span class="badge-npmversion"><a href="https://npmjs.com/package/prometheus-remote-write" title="View this project on NPM"><img src="https://img.shields.io/npm/dw/prometheus-remote-write.svg" alt="NPM Downloads" /></a></span>
+<span class="badge-npmversion"><a href="https://npmjs.com/package/prometheus-remote-write" title="View this project on NPM"><img src="https://img.shields.io/npm/v/prometheus-remote-write.svg" alt="NPM version" /></a></span> <span class="badge-npmsize"><a href="https://npmjs.com/package/prometheus-remote-write" title="View this project on NPM"><img src="https://img.shields.io/bundlephobia/min/prometheus-remote-write.svg" alt="NPM Size" /></a></span> <span class="badge-npmstats"><a href="https://npmjs.com/package/prometheus-remote-write" title="View this project on NPM"><img src="https://img.shields.io/npm/dw/prometheus-remote-write.svg" alt="NPM Downloads" /></a></span>
 
 Using remote_write facility (see https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write) to send metrics to remote Prometheus from NodeJS app.
 
