@@ -53,31 +53,11 @@ await pushMetrics(
   }
 );
 
-// Full config - only url is required
-const config = {
-  // Remote url
-  url: "http://localhost:9201",
-  // Auth settings
-  auth: {
-    username: "...",
-    password: "...",
-  },
-  // Optional prometheus protocol descripton .proto/.json
-  proto: undefined,
-  // Logging & debugging, disabled by default
-  console: undefined,
-  verbose: false,
-  timing: false,
-  // Override used node-fetch
-  fetch: undefined,
-  // Additional labels to apply to each timeseries, i.e. [{ service: "SQS" }]
-  labels: undefined
-};
-
 // Follows remote_write payload format (see https://github.com/prometheus/prometheus/blob/main/prompb/types.proto)
 await pushTimeseries(
   {
     labels: {
+      // Name should conform to https://prometheus.io/docs/practices/naming/
       __name__: "queue_depth_total",
       instance: "dev.example.com",
       service: "SQS",
@@ -91,6 +71,29 @@ await pushTimeseries(
   },
   config
 );
+
+
+// Full config - only url is required
+const config = {
+  // Remote url
+  url: "http://localhost:9201",
+  // Auth settings
+  auth: {
+    username: "...",
+    password: "...",
+  },
+  // Optional prometheus protocol descripton .proto/.json
+  proto: undefined,
+  // Override default console.name(...log) used
+  console: undefined,
+  // Be verbose
+  verbose: false,
+  timing: false,
+  // Override used node-fetch
+  fetch: undefined,
+  // Additional labels to apply to each timeseries, i.e. [{ service: "SQS" }]
+  labels: undefined
+};
 ```
 
 ## Links
