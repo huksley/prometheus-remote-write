@@ -30,8 +30,15 @@ interface Options {
   fetch?: typeof fetch
 }
 
+interface Result {
+  // Sstatus 200 OK
+  status: number,
+  statusText: string,
+  errorMessage?: string
+}
+
 /** Push timeseries entries to Prometheus */
-export function pushTimeseries(timeseries: Timeseries | Timeseries[], options?: Options);
+export function pushTimeseries(timeseries: Timeseries | Timeseries[], options?: Options): Promise<Result>;
 
 /** Push simpler key:value metrics to Prometheus, additional labels can be provided via options */
-export function pushMetrics(metrics: Record<string, number>, options?: Options);
+export function pushMetrics(metrics: Record<string, number>, options?: Options): Promise<Result>;

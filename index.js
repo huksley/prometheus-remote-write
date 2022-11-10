@@ -16,7 +16,7 @@ const kv = (o) =>
       }))
     : undefined;
 
-/** Loads protocol definition, caches it */
+/** Loads protocol definition, cache it */
 async function loadProto(options) {
   if (__holder.root) {
     return __holder.type;
@@ -51,6 +51,7 @@ async function serialize(payload, options) {
  *
  * @param {import("./types").Timeseries | import("./types").Timeseries[]} timeseries
  * @param {import("./types").Options} options
+ * @return {Promise<import("./types").Result>}
  */
 async function pushTimeseries(timeseries, options) {
   const orig = timeseries;
@@ -120,7 +121,11 @@ async function pushTimeseries(timeseries, options) {
       };
     });
   } else {
-    logger.warn("Unable to send timeseries, no endpoing configured", timeseries);
+    return {
+      status: 400,
+      statusText: "Bad request",
+      errorMessage: "No endpoint configured",
+    };
   }
 }
 
