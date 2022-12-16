@@ -17,6 +17,16 @@ interface Timeseries {
   samples: Sample[];
 }
 
+type MinimalFetch = (
+  url: string,
+  init?: {
+    method: string;
+    headers: { [key: string]: string };
+    timeout?: number;
+    body: ArrayBufferLike;
+  }
+) => Promise<{ status: number; statusText: string; text: () => Promise<string> }>;
+
 interface Options {
   url?: string;
   auth?: {
@@ -27,14 +37,16 @@ interface Options {
   timing?: boolean;
   proto?: string;
   labels?: { [key: string]: string };
-  fetch?: typeof fetch
+  timeout?: number;
+  console?: Console;
+  fetch?: MinimalFetch;
 }
 
 interface Result {
-  // Sstatus 200 OK
-  status: number,
-  statusText: string,
-  errorMessage?: string
+  // Status 200 OK
+  status: number;
+  statusText: string;
+  errorMessage?: string;
 }
 
 /** Push timeseries entries to Prometheus */

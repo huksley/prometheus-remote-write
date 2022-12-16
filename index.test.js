@@ -1,5 +1,7 @@
 const push = require("./index");
 
+push.pushMetrics({ users_total: 22}, { timeout: 1})
+
 const config = {
   url: process.env.GRAFANA_PUSH_URL,
   auth: {

@@ -25,7 +25,7 @@ async function loadProto(options) {
   if (options?.proto) {
     const root = await protobuf.load(options?.proto);
     if (options?.verbose) {
-      logger.info("Loaded protocol definitions", fileName, root);
+      console.info("Loaded protocol definitions", options?.proto, root);
     }
     const WriteRequest = root.lookupType("prometheus.WriteRequest");
     __holder.type = WriteRequest;
@@ -69,20 +69,19 @@ async function pushTimeseries(timeseries, options) {
   const start1 = Date.now();
   const writeRequest = {
     timeseries: timeseries.map((t) => ({
-      labels: Array.isArray(t.labels) ? [t.labels, ...(kv(options?.labels) || [])] : kv({
-        ...options?.labels,
-        ...t.labels
-      }),
+      labels: Array.isArray(t.labels)
+        ? [t.labels, ...(kv(options?.labels) || [])]
+        : kv({
+            ...options?.labels,
+            ...t.labels,
+          }),
       samples: t.samples.map((s) => ({
         value: s.value,
         timestamp: s.timestamp ? s.timestamp : Date.now(),
       })),
     })),
-  }
-  const buffer = await serialize(
-    writeRequest,
-    options?.proto
-  );
+  };
+  const buffer = await serialize(writeRequest, options?.proto);
 
   const logger = options?.console || console;
 
@@ -92,7 +91,9 @@ async function pushTimeseries(timeseries, options) {
   }
 
   if (options?.url) {
-    return (options.fetch || fetch)(options?.url, {
+    /** @type import("./types").MinimalFetch */
+    let fetch = options.fetch ||  require("node-fetch").default
+    return fetch(options?.url, {
       method: "POST",
       headers: {
         "Content-Type": "application/vnd.google.protobuf",
@@ -103,6 +104,7 @@ async function pushTimeseries(timeseries, options) {
           : undefined),
       },
       body: SnappyJS.compress(buffer),
+      timeout: options.timeout,
     }).then(async (r) => {
       const text = await r.text();
 
@@ -111,7 +113,13 @@ async function pushTimeseries(timeseries, options) {
       } else if (options?.verbose && !options?.timing) {
         logger.info("Write request sent", r.status + " " + r.statusText + " " + text, writeRequest);
       } else if (options?.verbose && options?.timing) {
-        logger.info("Write request sent", r.status + " " + r.statusText + " in", Date.now() - start2, "ms", writeRequest);
+        logger.info(
+          "Write request sent",
+          r.status + " " + r.statusText + " in",
+          Date.now() - start2,
+          "ms",
+          writeRequest
+        );
       }
 
       return {
@@ -131,17 +139,17 @@ async function pushTimeseries(timeseries, options) {
 
 async function pushMetrics(metrics, options) {
   return pushTimeseries(
-    Object.entries(metrics).map(c => ({
+    Object.entries(metrics).map((c) => ({
       labels: { __name__: c[0] },
-      samples: [{ value: c[1] }]
+      samples: [{ value: c[1] }],
     })),
     options
-  )
+  );
 }
 
 module.exports = {
   serialize,
   loadProto,
   pushTimeseries,
-  pushMetrics
+  pushMetrics,
 };
