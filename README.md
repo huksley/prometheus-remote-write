@@ -8,6 +8,7 @@ Pretty much anything from https://prometheus.io/docs/operating/integrations/#rem
 
 - [AppOptics](https://github.com/solarwinds/prometheus2appoptics)
 - [AWS Timestream](https://github.com/dpattmann/prometheus-timestream-adapter)
+- [AWS AMP - Managed Prometheus](https://aws.amazon.com/prometheus/) -  Use function "createSignedFetcher" from NPM package [aws-sigv4-fetch](https://www.npmjs.com/package/aws-sigv4-fetch) and provide it in options as customized fetcher.
 - [Azure Data Explorer](https://github.com/cosh/PrometheusToAdx)
 - [Azure Event Hubs](https://github.com/bryanklewis/prometheus-eventhubs-adapter)
 - [Chronix](https://github.com/ChronixDB/chronix.ingester)
