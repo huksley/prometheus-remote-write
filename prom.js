@@ -150,18 +150,22 @@
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.type = reader.int32();
-                        break;
-                    case 2:
-                        message.metricFamilyName = reader.string();
-                        break;
-                    case 4:
-                        message.help = reader.string();
-                        break;
-                    case 5:
-                        message.unit = reader.string();
-                        break;
+                    case 1: {
+                            message.type = reader.int32();
+                            break;
+                        }
+                    case 2: {
+                            message.metricFamilyName = reader.string();
+                            break;
+                        }
+                    case 4: {
+                            message.help = reader.string();
+                            break;
+                        }
+                    case 5: {
+                            message.unit = reader.string();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -236,6 +240,12 @@
                     return object;
                 var message = new $root.prometheus.MetricMetadata();
                 switch (object.type) {
+                default:
+                    if (typeof object.type === "number") {
+                        message.type = object.type;
+                        break;
+                    }
+                    break;
                 case "UNKNOWN":
                 case 0:
                     message.type = 0;
@@ -298,7 +308,7 @@
                     object.unit = "";
                 }
                 if (message.type != null && message.hasOwnProperty("type"))
-                    object.type = options.enums === String ? $root.prometheus.MetricMetadata.MetricType[message.type] : message.type;
+                    object.type = options.enums === String ? $root.prometheus.MetricMetadata.MetricType[message.type] === undefined ? message.type : $root.prometheus.MetricMetadata.MetricType[message.type] : message.type;
                 if (message.metricFamilyName != null && message.hasOwnProperty("metricFamilyName"))
                     object.metricFamilyName = message.metricFamilyName;
                 if (message.help != null && message.hasOwnProperty("help"))
@@ -317,6 +327,21 @@
              */
             MetricMetadata.prototype.toJSON = function toJSON() {
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            /**
+             * Gets the default type url for MetricMetadata
+             * @function getTypeUrl
+             * @memberof prometheus.MetricMetadata
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            MetricMetadata.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/prometheus.MetricMetadata";
             };
     
             /**
@@ -451,12 +476,14 @@
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.value = reader.double();
-                        break;
-                    case 2:
-                        message.timestamp = reader.int64();
-                        break;
+                    case 1: {
+                            message.value = reader.double();
+                            break;
+                        }
+                    case 2: {
+                            message.timestamp = reader.int64();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -567,6 +594,21 @@
              */
             Sample.prototype.toJSON = function toJSON() {
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            /**
+             * Gets the default type url for Sample
+             * @function getTypeUrl
+             * @memberof prometheus.Sample
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            Sample.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/prometheus.Sample";
             };
     
             return Sample;
@@ -688,17 +730,20 @@
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        if (!(message.labels && message.labels.length))
-                            message.labels = [];
-                        message.labels.push($root.prometheus.Label.decode(reader, reader.uint32()));
-                        break;
-                    case 2:
-                        message.value = reader.double();
-                        break;
-                    case 3:
-                        message.timestamp = reader.int64();
-                        break;
+                    case 1: {
+                            if (!(message.labels && message.labels.length))
+                                message.labels = [];
+                            message.labels.push($root.prometheus.Label.decode(reader, reader.uint32()));
+                            break;
+                        }
+                    case 2: {
+                            message.value = reader.double();
+                            break;
+                        }
+                    case 3: {
+                            message.timestamp = reader.int64();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -837,6 +882,21 @@
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
             };
     
+            /**
+             * Gets the default type url for Exemplar
+             * @function getTypeUrl
+             * @memberof prometheus.Exemplar
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            Exemplar.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/prometheus.Exemplar";
+            };
+    
             return Exemplar;
         })();
     
@@ -960,21 +1020,24 @@
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        if (!(message.labels && message.labels.length))
-                            message.labels = [];
-                        message.labels.push($root.prometheus.Label.decode(reader, reader.uint32()));
-                        break;
-                    case 2:
-                        if (!(message.samples && message.samples.length))
-                            message.samples = [];
-                        message.samples.push($root.prometheus.Sample.decode(reader, reader.uint32()));
-                        break;
-                    case 3:
-                        if (!(message.exemplars && message.exemplars.length))
-                            message.exemplars = [];
-                        message.exemplars.push($root.prometheus.Exemplar.decode(reader, reader.uint32()));
-                        break;
+                    case 1: {
+                            if (!(message.labels && message.labels.length))
+                                message.labels = [];
+                            message.labels.push($root.prometheus.Label.decode(reader, reader.uint32()));
+                            break;
+                        }
+                    case 2: {
+                            if (!(message.samples && message.samples.length))
+                                message.samples = [];
+                            message.samples.push($root.prometheus.Sample.decode(reader, reader.uint32()));
+                            break;
+                        }
+                    case 3: {
+                            if (!(message.exemplars && message.exemplars.length))
+                                message.exemplars = [];
+                            message.exemplars.push($root.prometheus.Exemplar.decode(reader, reader.uint32()));
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -1132,6 +1195,21 @@
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
             };
     
+            /**
+             * Gets the default type url for TimeSeries
+             * @function getTypeUrl
+             * @memberof prometheus.TimeSeries
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            TimeSeries.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/prometheus.TimeSeries";
+            };
+    
             return TimeSeries;
         })();
     
@@ -1238,12 +1316,14 @@
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.name = reader.string();
-                        break;
-                    case 2:
-                        message.value = reader.string();
-                        break;
+                    case 1: {
+                            message.name = reader.string();
+                            break;
+                        }
+                    case 2: {
+                            message.value = reader.string();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -1340,6 +1420,21 @@
              */
             Label.prototype.toJSON = function toJSON() {
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            /**
+             * Gets the default type url for Label
+             * @function getTypeUrl
+             * @memberof prometheus.Label
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            Label.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/prometheus.Label";
             };
     
             return Label;
@@ -1452,16 +1547,18 @@
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        if (!(message.timeseries && message.timeseries.length))
-                            message.timeseries = [];
-                        message.timeseries.push($root.prometheus.TimeSeries.decode(reader, reader.uint32()));
-                        break;
-                    case 3:
-                        if (!(message.metadata && message.metadata.length))
-                            message.metadata = [];
-                        message.metadata.push($root.prometheus.MetricMetadata.decode(reader, reader.uint32()));
-                        break;
+                    case 1: {
+                            if (!(message.timeseries && message.timeseries.length))
+                                message.timeseries = [];
+                            message.timeseries.push($root.prometheus.TimeSeries.decode(reader, reader.uint32()));
+                            break;
+                        }
+                    case 3: {
+                            if (!(message.metadata && message.metadata.length))
+                                message.metadata = [];
+                            message.metadata.push($root.prometheus.MetricMetadata.decode(reader, reader.uint32()));
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -1592,6 +1689,21 @@
              */
             WriteRequest.prototype.toJSON = function toJSON() {
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            /**
+             * Gets the default type url for WriteRequest
+             * @function getTypeUrl
+             * @memberof prometheus.WriteRequest
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            WriteRequest.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/prometheus.WriteRequest";
             };
     
             return WriteRequest;

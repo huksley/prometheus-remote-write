@@ -24,7 +24,7 @@
     "metrics"
   ],
   "dependencies": {
-    "protobufjs": "^6.11.3",
+    "protobufjs": "^7.2.4",
     "snappyjs": "^0.6.1"
   },
   "peerDependencies": {
@@ -34,5 +34,8 @@
     "node-fetch": {
       "optional": true
     }
+  },
+  "devDependencies": {
+    "protobufjs-cli": "^1.1.1"
   }
 }
