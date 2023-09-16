@@ -40,6 +40,7 @@ interface Options {
   timeout?: number;
   console?: Console;
   fetch?: MinimalFetch;
+  headers?: { [key: string]: string };
 }
 
 interface Result {

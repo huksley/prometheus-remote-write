@@ -93,7 +93,9 @@ const config = {
   // Override used node-fetch
   fetch: undefined,
   // Additional labels to apply to each timeseries, i.e. [{ service: "SQS" }]
-  labels: undefined
+  labels: undefined,
+  // Additional HTTP headers to send with each request
+  headers: undefined
 };
 ```
 

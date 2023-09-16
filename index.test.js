@@ -1,6 +1,6 @@
 const push = require("./index");
 
-push.pushMetrics({ users_total: 22}, { timeout: 1})
+push.pushMetrics({ users_total: 22 }, { timeout: 1 });
 
 const config = {
   url: process.env.GRAFANA_PUSH_URL,
@@ -43,7 +43,7 @@ for (let i = 0; i < 100; i++) {
         labels: {
           __name__: "test_exemplar_metric_total",
           instance: "localhost:8090",
-          job: "prometheus"
+          job: "prometheus",
         },
         samples: [
           {
@@ -59,4 +59,18 @@ for (let i = 0; i < 100; i++) {
     });
 }
 
-push.pushMetrics({ users_total: 11 })
+push.pushMetrics({ users_total: 11 });
+
+setTimeout(
+  () =>
+    push.pushMetrics(
+      { max_users_total: 31 },
+      {
+        headers: {
+          "X-extra-key": "test2",
+        },
+        verbose: true,
+      }
+    ),
+  1000
+);

@@ -1,5 +1,4 @@
 const SnappyJS = require("snappyjs");
-const fetch = require("node-fetch");
 const protobuf = require("protobufjs");
 const btoa = (s) => Buffer.from(s, "binary").toString("base64");
 const prom = require("./prom");
@@ -92,7 +91,7 @@ async function pushTimeseries(timeseries, options) {
 
   if (options?.url) {
     /** @type import("./types").MinimalFetch */
-    let fetch = options.fetch ||  require("node-fetch").default
+    let fetch = options.fetch || require("node-fetch").default;
     return fetch(options?.url, {
       method: "POST",
       headers: {
@@ -102,6 +101,7 @@ async function pushTimeseries(timeseries, options) {
               Authorization: "Basic " + btoa(options?.auth.username + ":" + options?.auth?.password),
             }
           : undefined),
+        ...(options.headers || {}),
       },
       body: SnappyJS.compress(buffer),
       timeout: options.timeout,
@@ -137,6 +137,13 @@ async function pushTimeseries(timeseries, options) {
   }
 }
 
+/**
+ * Sends metrics over HTTP(s)
+ *
+ * @param {Record<string,number>} metrics
+ * @param {import("./types").Options=} options
+ * @return {Promise<import("./types").Result>}
+ */
 async function pushMetrics(metrics, options) {
   return pushTimeseries(
     Object.entries(metrics).map((c) => ({

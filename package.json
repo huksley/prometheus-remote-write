@@ -1,6 +1,6 @@
 {
   "name": "prometheus-remote-write",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Send samples to prometheus via remote_write from NodeJS",
   "main": "index.js",
   "types": "types.d.ts",
