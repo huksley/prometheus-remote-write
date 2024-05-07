@@ -108,7 +108,7 @@ async function pushTimeseries(timeseries, options) {
     }).then(async (r) => {
       const text = await r.text();
 
-      if (options?.verbose && r.status != 200) {
+      if (options?.verbose && r.status != 200 && r.status != 204) {
         logger.warn("Failed to send write request, error", r.status + " " + r.statusText + " " + text, writeRequest);
       } else if (options?.verbose && !options?.timing) {
         logger.info("Write request sent", r.status + " " + r.statusText + " " + text, writeRequest);
