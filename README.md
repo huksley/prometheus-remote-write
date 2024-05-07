@@ -4,7 +4,7 @@
 
 Using remote_write facility (see https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write) to send metrics to remote Prometheus from NodeJS app.
 
-Pretty much anything from https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage should be supported, but tested only with grafana.com:
+Pretty much anything from https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage should be supported, but tested only with Grafana Cloud, Grafana Mimir Prometheus, AWS AMP and VictoriaMetrics.
 
 - [AppOptics](https://github.com/solarwinds/prometheus2appoptics)
 - [AWS Timestream](https://github.com/dpattmann/prometheus-timestream-adapter)
