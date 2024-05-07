@@ -33,7 +33,7 @@ Pretty much anything from https://prometheus.io/docs/operating/integrations/#rem
 - [Sysdig Monitor](https://docs.sysdig.com/en/docs/installation/prometheus-remote-write/)
 - [TiKV](https://github.com/bragfoo/TiPrometheus)
 - [Thanos](https://github.com/thanos-io/thanos)
-- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
+- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - [docs](https://docs.victoriametrics.com/vmagent/#prometheus-remote_write-proxy)
 - [Wavefront](https://github.com/wavefrontHQ/prometheus-storage-adapter)
 
 (List copied from https://github.com/prometheus/docs/blob/main/content/docs/operating/integrations.md)
