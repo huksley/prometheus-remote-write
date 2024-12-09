@@ -95,7 +95,7 @@ async function pushTimeseries(timeseries, options) {
     return fetch(options?.url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/vnd.google.protobuf",
+        "Content-Type": "application/x-protobuf",
         ...(options?.auth?.username && options?.auth?.password
           ? {
               Authorization: "Basic " + btoa(options?.auth.username + ":" + options?.auth?.password),
