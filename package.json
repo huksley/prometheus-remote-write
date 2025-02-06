@@ -25,15 +25,8 @@
   ],
   "dependencies": {
     "protobufjs": "^7.2.4",
-    "snappyjs": "^0.6.1"
-  },
-  "peerDependencies": {
+    "snappyjs": "^0.6.1",
     "node-fetch": "^3.3.2"
-  },
-  "peerDependenciesMeta": {
-    "node-fetch": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "protobufjs-cli": "^1.1.1"
