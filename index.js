@@ -45,6 +45,11 @@ async function serialize(payload, options) {
   return buffer;
 }
 
+async function deserialize(buffer, options) {
+  const type = await loadProto(options);
+  return type.decode(buffer);
+}
+
 /**
  * Sends metrics over HTTP(s)
  *
@@ -156,6 +161,7 @@ async function pushMetrics(metrics, options) {
 
 module.exports = {
   serialize,
+  deserialize,
   loadProto,
   pushTimeseries,
   pushMetrics,

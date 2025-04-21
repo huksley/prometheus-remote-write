@@ -55,3 +55,9 @@ export function pushTimeseries(timeseries: Timeseries | Timeseries[], options?: 
 
 /** Push simpler key:value metrics to Prometheus, additional labels can be provided via options */
 export function pushMetrics(metrics: Record<string, number>, options?: Options): Promise<Result>;
+
+/** Deserialize a protobuf buffer to a timeseries object */
+export function deserialize(buffer: ArrayBufferLike, options?: Options): Promise<Timeseries>;
+
+/** Serialize a timeseries object to a protobuf buffer */
+export function serialize(timeseries: Timeseries, options?: Options): Promise<ArrayBufferLike>;
